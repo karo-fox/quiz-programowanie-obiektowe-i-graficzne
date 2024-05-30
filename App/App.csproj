@@ -9,8 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DAL\Encje\" />
-    <Folder Include="DAL\Repozytoria\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
   </ItemGroup>

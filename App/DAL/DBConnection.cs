@@ -7,7 +7,7 @@ namespace App.DAL
     {
         private MySqlConnectionStringBuilder stringBuilder = new MySqlConnectionStringBuilder();
         private static DBConnection instance = null;
-        private static DBConnection Instance
+        public static DBConnection Instance
         {
             get
             {
