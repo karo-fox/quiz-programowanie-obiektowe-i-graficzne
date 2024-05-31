@@ -14,7 +14,7 @@
         <TabControl>
             <TabItem x:Name="creator" Header="Kreator">
                 <TabControl>
-                    <TabItem x:Name="editor" Header="Tworzenie quizu">
+                    <TabItem x:Name="adder" Header="Tworzenie quizu">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="3*"></RowDefinition>
@@ -54,8 +54,32 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="adder" Header="Edytowanie quizu">
-
+                    <TabItem x:Name="editor" Header="Edytowanie quizu">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Wybierz quiz" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,262,87"></TextBlock>
+                            <TextBlock Text="Wybierz pytanie" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,80" Grid.RowSpan="2"/>
+                            <TextBlock Text="Wybierz odpowiedź" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,85" Grid.RowSpan="2"></TextBlock>
+                            <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0"></ListBox>
+                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0"></ComboBox>
+                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0"></ComboBox>
+                            <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
+                            <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                            <CheckBox Grid.Row="2" Grid.Column="1" Content="Poprawne?" Margin="0,97,0,0"></CheckBox>
+                            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,126,0,34" Grid.RowSpan="2"></TextBox>
+                            <Button Content="Zaktualizuj nazwę quizu" Grid.Column="2" Grid.Row="0"></Button>
+                            <Button Content="Zaktualizuj treść pytania" Grid.Column="2" Grid.Row="1"></Button>
+                            <Button Content="Zaktualizuj odpowiedź" Grid.Column="2" Grid.Row="2"></Button>
+                        </Grid>
                     </TabItem>
                 </TabControl>
             </TabItem>
