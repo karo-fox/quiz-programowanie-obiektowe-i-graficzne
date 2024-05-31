@@ -17,7 +17,9 @@ namespace App.DAL
         }
 
         private MySqlConnection connection;
-        public MySqlConnection Connection => connection;
+        //public MySqlConnection Connection => connection;
+        // Wywalało mi błąd connection is disposed, podmianka na to niżej naprawiło
+        public MySqlConnection Connection => new MySqlConnection(stringBuilder.ToString());
 
         private DBConnection()
         {
