@@ -12,7 +12,6 @@ namespace App.DAL.Repositories
     class QuizRepository
     {
         private const string ALL_QUIZES = "SELECT * FROM quizes";
-        private const string ADD_QUIZ = "INSERT 'quizes`(`name`) VALUE ";
 
         public static List<Quiz> GetAllQuizes()
         {

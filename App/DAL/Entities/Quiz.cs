@@ -18,18 +18,6 @@ namespace App.DAL.Entities
             Name = reader["name"].ToString();
         }
 
-        public Quiz(string name)
-        {
-            Id = null;
-            Name = name.Trim();
-        }
-
-        public Quiz(Quiz quiz)
-        {
-            Id = quiz.Id;
-            Name = quiz.Name;
-        }
-
         public override string ToString()
         {
             return $"Quiz {Id}: {Name}";
