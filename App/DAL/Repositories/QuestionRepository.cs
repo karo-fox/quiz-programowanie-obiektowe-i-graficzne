@@ -6,6 +6,7 @@ namespace App.DAL.Repositories
     class QuestionRepository
     {
         private const string QUESTIONS_BY_QUIZ_ID = "SELECT * FROM questions WHERE quiz = ";
+        private const string QUESTIONID_BY_QUIZ_ID = "SELECT id FROM questions WHERE quiz = ";
         private const string ADD_NEW_QUESTION = "INSERT INTO questions (text, quiz) VALUES ";
 
         public static List<Question> GetQuestionsByQuizId(int quizId)
@@ -21,6 +22,19 @@ namespace App.DAL.Repositories
                 connection.Close();
             }
 
+            return questions;
+        }
+        public static List<int> GetQuestionIdByQuizId(int quizId)
+        {
+            List<int> questions = new List<int>();
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(QUESTIONID_BY_QUIZ_ID + quizId, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { questions.Add((int)reader.GetInt32(0)); }
+                connection.Close();
+            }
             return questions;
         }
 
