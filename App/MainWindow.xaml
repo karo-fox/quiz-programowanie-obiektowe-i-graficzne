@@ -4,9 +4,88 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App"
+        xmlns:vm="clr-namespace:App.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <vm:MainViewModel x:Key="mainVM"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource mainVM}">
+        <TabControl>
+            <TabItem x:Name="creator" Header="Kreator">
+                <TabControl>
+                    <TabItem x:Name="adder" Header="Tworzenie quizu">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="11*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" Margin="0,0,409,0" Text="{Binding TabCreateQuizVM.NewQuizName}"></TextBox>
+                            <Button Grid.Row="0" Content="Dodaj quiz do bazy" Margin="379,0,0,0" Command="{Binding TabCreateQuizVM.DodajQuiz}"></Button>
+                            <TextBlock Grid.Row="1" Text="Wybierz quiz, do którego dodasz pytanie:"></TextBlock>
+                            <ComboBox Grid.Row="1" Margin="0,22,0,0" ItemsSource="{Binding TabCreateQuizVM.QuizNames}" SelectedValue="{Binding TabCreateQuizVM.CurrentQuizName}"></ComboBox>
+                            <TextBlock Grid.Row="2" Text="Wpisz pytanie:"></TextBlock>
+                            <TextBox Grid.Row="2" Margin="0,21,0,0" Text="{Binding TabCreateQuizVM.Question}"></TextBox>
+                            <Button Grid.Row="5" Content="Dodaj pytanie do bazy" Command="{Binding TabCreateQuizVM.DodajPytanie}"></Button>
+                            <Grid Grid.Row="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Text="Odpowiedź A:" Margin="0,1,296,59"></TextBlock>
+                                <TextBox Margin="103,0,0,115" Grid.Row="0" Grid.RowSpan="2" Text="{Binding TabCreateQuizVM.Ans1}"></TextBox>
+                                <CheckBox Content="Poprawne?" Margin="0,47,296,21" Grid.Row="0" IsChecked="{Binding TabCreateQuizVM.BAns1}"/>
+                                <TextBlock Grid.Row="1" Text="Odpowiedź B:" Margin="0,1,296,59"></TextBlock>
+                                <TextBox Margin="103,0,0,0" Grid.Row="1" Text="{Binding TabCreateQuizVM.Ans2}"/>
+                                <CheckBox Content="Poprawne?" Margin="0,58,296,0" Grid.Row="1" IsChecked="{Binding TabCreateQuizVM.BAns2}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="Odpowiedź C:" Margin="0,1,296,59"></TextBlock>
+                                <TextBox Margin="103,0,0,115" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Text="{Binding TabCreateQuizVM.Ans3}"></TextBox>
+                                <CheckBox Content="Poprawne?" Margin="0,47,296,21" Grid.Row="0" Grid.Column="1" IsChecked="{Binding TabCreateQuizVM.BAns3}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="Odpowiedź D:" Margin="0,1,296,59"></TextBlock>
+                                <TextBox Margin="103,0,0,0" Grid.Row="1" Grid.Column="1" Text="{Binding TabCreateQuizVM.Ans4}"/>
+                                <CheckBox Content="Poprawne?" Margin="0,58,296,0" Grid.Row="1" Grid.Column="1" IsChecked="{Binding TabCreateQuizVM.BAns4}"/>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="editor" Header="Edytowanie quizu">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Wybierz quiz" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,262,87"></TextBlock>
+                            <TextBlock Text="Wybierz pytanie" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,80" Grid.RowSpan="2"/>
+                            <TextBlock Text="Wybierz odpowiedź" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,85" Grid.RowSpan="2"></TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0"></ComboBox>
+                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0"></ComboBox>
+                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0"></ComboBox>
+                            <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
+                            <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                            <CheckBox Grid.Row="2" Grid.Column="1" Content="Poprawne?" Margin="0,97,0,0"></CheckBox>
+                            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,126,0,34" Grid.RowSpan="2"></TextBox>
+                            <Button Content="Zaktualizuj nazwę quizu" Grid.Column="2" Grid.Row="0"></Button>
+                            <Button Content="Zaktualizuj treść pytania" Grid.Column="2" Grid.Row="1"></Button>
+                            <Button Content="Zaktualizuj odpowiedź" Grid.Column="2" Grid.Row="2"></Button>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem x:Name="solver" Header="Rozwiązywacz xD">
 
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

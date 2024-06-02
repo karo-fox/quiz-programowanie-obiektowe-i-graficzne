@@ -8,10 +8,15 @@ namespace App.DAL.Repositories
 {
     using Entities;
     using MySql.Data.MySqlClient;
+    using System.Diagnostics.Eventing.Reader;
+    using System.Reflection.Metadata;
 
     class QuizRepository
     {
         private const string ALL_QUIZES = "SELECT * FROM quizes";
+        private const string ALL_QUIZ_NAMES = "SELECT name FROM quizes";
+        private const string QUIZID_BY_NAME = "SELECT id FROM quizes WHERE name = ";
+        private const string ADD_NEW_QUIZ = "INSERT INTO quizes (name) VALUE ";
 
         public static List<Quiz> GetAllQuizes()
         {
@@ -27,6 +32,45 @@ namespace App.DAL.Repositories
             }
 
             return quizes;
+        }
+        public static List<String> GetAllQuizNames()
+        {
+            List<String> quizNames = new List<String>();
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(ALL_QUIZ_NAMES, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { quizNames.Add(reader.GetString(0)); }
+                connection.Close();
+            }
+            return quizNames;
+        }
+        public static int GetQuizIdByName(string name)
+        {
+            int id = -1;
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(QUIZID_BY_NAME + $" '{name}' ", connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { id=reader.GetInt32(0); }
+                connection.Close();
+            }
+            return id;
+        }
+        public static bool AddNewQuiz(string name)
+        {
+            bool stan = false;
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(ADD_NEW_QUIZ + $"( '{name}' )", connection);
+                connection.Open();
+                var n = command.ExecuteNonQuery();
+                stan = true;
+                connection.Close();
+            }
+            return stan;
         }
     }
 }
