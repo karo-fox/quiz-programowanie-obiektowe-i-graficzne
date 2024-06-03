@@ -12,10 +12,14 @@ namespace App.ViewModel
         private CreatorModel model = new CreatorModel();
         public TabCreateQuizViewModel TabCreateQuizVM { get; set; }
         public TabEditQuizViewModel TabEditQuizVM { get; set;}
+        public SelectQuizViewModel SelectQuizVM { get; set; }
+        public SolveQuizViewModel SolveQuizVM { get; set; }
         public MainViewModel() 
         {
             TabCreateQuizVM = new TabCreateQuizViewModel(model);
             TabEditQuizVM = new TabEditQuizViewModel(model);
+            SelectQuizVM = new SelectQuizViewModel();
+            SolveQuizVM = new SolveQuizViewModel();
         }
     }
 }

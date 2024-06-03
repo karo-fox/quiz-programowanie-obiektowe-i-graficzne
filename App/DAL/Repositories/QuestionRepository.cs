@@ -9,9 +9,11 @@ namespace App.DAL.Repositories
         private const string QUESTIONID_BY_QUIZ_ID = "SELECT id FROM questions WHERE quiz = ";
         private const string ADD_NEW_QUESTION = "INSERT INTO questions (text, quiz) VALUES ";
 
-        public static List<Question> GetQuestionsByQuizId(int quizId)
+        public static List<Question> GetQuestionsByQuizId(int? quizId)
         {
             List<Question> questions = new List<Question>();
+
+            if (quizId == null) { return questions; }
 
             using (var connection = DBConnection.Instance.Connection)
             {

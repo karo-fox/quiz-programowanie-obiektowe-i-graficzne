@@ -2,6 +2,7 @@
 using App.DAL.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,7 @@ namespace App.Model
 {
     class QuizSelector
     {
-        private readonly List<Quiz> quizes = [];
-        private Quiz? selected = null;
+        private Quiz selected;
         private static readonly QuizSelector instance = new QuizSelector();
 
         public static QuizSelector Instance
@@ -24,14 +24,15 @@ namespace App.Model
 
         private QuizSelector()
         {
-            quizes = QuizRepository.GetAllQuizes();
+            selected = Quizes[0];
         }
 
-        public Quiz? Selected { get { return selected; } }
+        public ObservableCollection<Quiz> Quizes { get { return QuizRepository.GetAllQuizes(); } }
+        public Quiz Selected { get { return selected; } }
 
         public void SelectQuiz(int id)
         {
-            selected = (Quiz)quizes.Where(quiz => quiz.Id == id);
+            selected = (Quiz)Quizes.Where(quiz => quiz.Id == id).Take(1).ToList()[0];
         }
     }
 }

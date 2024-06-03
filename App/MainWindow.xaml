@@ -2,6 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:t="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App"
         xmlns:vm="clr-namespace:App.ViewModel"
@@ -83,8 +85,94 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="solver" Header="Rozwiązywacz xD">
+            <TabItem x:Name="solver" Header="Rozwiązywacz" Height="20" VerticalAlignment="Top">
+                <TabControl SelectedIndex="{Binding SolveQuizVM.TabIndex}">
+                    <TabItem x:Name="selector" Header="Wybór quizu">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ComboBox x:Name="quizSelection" Grid.Row="0" ItemsSource="{Binding SelectQuizVM.Quizes}" SelectedItem="{Binding SelectQuizVM.Selected}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="DropDownOpened" SourceName="quizSelection">
+                                        <i:InvokeCommandAction Command="{Binding SelectQuizVM.ReloadQuizesList}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                            <Button x:Name="selectQuizBtn" Grid.Row="1" Content="Rozpocznij Quiz" Command="{Binding SolveQuizVM.ReloadQuizSolver}" />
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="quiz" Header="Rozwiązywanie Quizu">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="5*" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding SolveQuizVM.QuestionNoText}" />
+                                <TextBlock Grid.Column="1" Text="{Binding SolveQuizVM.QuizName}" />
+                                <TextBlock Grid.Column="2" Text="{Binding SolveQuizVM.Points}" />
+                            </Grid>
+                            <TextBlock Grid.Row="1" Text="{Binding SolveQuizVM.QuestionText}"/>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="answer1" Grid.Column="0" Grid.Row="0" Content="{Binding SolveQuizVM.Answers[0]}" IsChecked="{Binding SolveQuizVM.Checked1}" />
+                                <CheckBox x:Name="answer2" Grid.Column="1" Grid.Row="0" Content="{Binding SolveQuizVM.Answers[1]}" IsChecked="{Binding SolveQuizVM.Checked2}" />
+                                <CheckBox x:Name="answer3" Grid.Column="0" Grid.Row="1" Content="{Binding SolveQuizVM.Answers[2]}" IsChecked="{Binding SolveQuizVM.Checked3}" />
+                                <CheckBox x:Name="answer4" Grid.Column="1" Grid.Row="1" Content="{Binding SolveQuizVM.Answers[3]}" IsChecked="{Binding SolveQuizVM.Checked4}" />
 
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="endQuiz" Grid.Column="0" Content="Zakończ Quiz">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click" SourceName="endQuiz">
+                                            <i:InvokeCommandAction Command="{Binding SolveQuizVM.EndQuiz}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <TextBlock Grid.Column="1" Text="{Binding SolveQuizVM.CurrentTime}" />
+                                <Button x:Name="nextQuestion" Grid.Column="2" Content="Następne pytanie" IsEnabled="{Binding SolveQuizVM.IsNextQuestionEnabled}" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click" SourceName="nextQuestion">
+                                            <i:InvokeCommandAction Command="{Binding SolveQuizVM.NextQuestion}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="results" Header="Wyniki">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding SolveQuizVM.Points}" />
+                            <TextBlock Grid.Row="1" Text="{Binding SolveQuizVM.CurrentTime}"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
         </TabControl>
     </Grid>

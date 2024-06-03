@@ -2,6 +2,7 @@
 using App.DAL.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,29 +11,29 @@ namespace App.Model
 {
     class QuestionSolver
     {
-        private List<Answer> answers;
+        private ObservableCollection<Answer> answers;
         private List<Answer> correctAnswers;
-        private List<Answer> currentAnswers = [];
+        private ObservableCollection<Answer> currentAnswers = [];
 
         public QuestionSolver(Question question)
         {
             answers = AnswerRepository.GetAnswersByQuestionId(question.Id);
-            correctAnswers = (List<Answer>)answers.Where(answer => answer.IsCorrect);
+            correctAnswers = answers.Where(answer => answer.IsCorrect).ToList<Answer>();
         }
 
-        public List<Answer> GetAllAnswers()
+        public ObservableCollection<Answer> GetAllAnswers()
         {
             return answers;
         }
 
         public void SelectAnswer(int answerId)
         {
-            currentAnswers.Add((Answer)answers.Where(answer => answer.Id == answerId));
+            currentAnswers.Add((Answer)answers.Where(answer => answer.Id == answerId).Take(1).ToList()[0]);
         }
 
         public bool IsCorrect()
         {
-            return correctAnswers.All(answer => currentAnswers.Contains(answer));
+            return currentAnswers.All(answer => answer.IsCorrect);
         }
     }
 }

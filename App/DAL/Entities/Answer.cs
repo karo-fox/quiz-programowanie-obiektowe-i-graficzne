@@ -16,5 +16,10 @@ namespace App.DAL.Entities
             IsCorrect = bool.Parse(reader["isCorrect"].ToString());
             QuestionId = sbyte.Parse(reader["question"].ToString());
         }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace App.DAL.Repositories
 {
     using Entities;
     using MySql.Data.MySqlClient;
+    using System.Collections.ObjectModel;
     using System.Diagnostics.Eventing.Reader;
     using System.Reflection.Metadata;
 
@@ -18,9 +19,9 @@ namespace App.DAL.Repositories
         private const string QUIZID_BY_NAME = "SELECT id FROM quizes WHERE name = ";
         private const string ADD_NEW_QUIZ = "INSERT INTO quizes (name) VALUE ";
 
-        public static List<Quiz> GetAllQuizes()
+        public static ObservableCollection<Quiz> GetAllQuizes()
         {
-            List<Quiz> quizes = new List<Quiz>();
+            ObservableCollection<Quiz> quizes = [];
 
             using (var connection = DBConnection.Instance.Connection)
             {
@@ -33,9 +34,9 @@ namespace App.DAL.Repositories
 
             return quizes;
         }
-        public static List<String> GetAllQuizNames()
+        public static ObservableCollection<String> GetAllQuizNames()
         {
-            List<String> quizNames = new List<String>();
+            ObservableCollection<String> quizNames = [];
             using (var connection = DBConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(ALL_QUIZ_NAMES, connection);
