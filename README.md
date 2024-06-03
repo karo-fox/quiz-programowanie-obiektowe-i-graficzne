@@ -8,7 +8,7 @@ You have to import the database included in `database.sql` file. You can do this
 `mysql -u <username> -p quizDB < .\path\to\database.sql`
 
 ## Installing dependencies
-In Visual Studio, search for Nuget Package Manager. Then, find MySql.Data package and add it to the project.
+In Visual Studio, search for Nuget Package Manager. Then, find **MySql.Data** and **Microsoft.Xaml.Behaviors.Wpf** packages and add them to the project.
 
 ## Configuration
 In VisualStudio, navigate to the project's Properties. Choose Settings and create or add new settings to `App.config`.
