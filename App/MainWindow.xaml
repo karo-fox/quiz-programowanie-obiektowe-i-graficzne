@@ -71,16 +71,16 @@
                             <TextBlock Text="Wybierz quiz" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,262,87"></TextBlock>
                             <TextBlock Text="Wybierz pytanie" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,80" Grid.RowSpan="2"/>
                             <TextBlock Text="Wybierz odpowiedź" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,85" Grid.RowSpan="2"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0"></ComboBox>
-                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0"></ComboBox>
-                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0"></ComboBox>
-                            <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
-                            <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
-                            <CheckBox Grid.Row="2" Grid.Column="1" Content="Poprawne?" Margin="0,97,0,0"></CheckBox>
-                            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,126,0,34" Grid.RowSpan="2"></TextBox>
-                            <Button Content="Zaktualizuj nazwę quizu" Grid.Column="2" Grid.Row="0"></Button>
-                            <Button Content="Zaktualizuj treść pytania" Grid.Column="2" Grid.Row="1"></Button>
-                            <Button Content="Zaktualizuj odpowiedź" Grid.Column="2" Grid.Row="2"></Button>
+                            <ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0" ItemsSource="{Binding TabEditQuizVM.Quizes, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentQuiz, Mode=TwoWay}"></ComboBox>
+                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0" ItemsSource="{Binding TabEditQuizVM.Questions, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentQuestion, Mode=TwoWay}"></ComboBox>
+                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0" ItemsSource="{Binding TabEditQuizVM.Answers, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentAnswer, Mode=TwoWay}"></ComboBox>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TabEditQuizVM.CurrentQuiz.Name}"></TextBox>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TabEditQuizVM.CurrentQuestion.Text}"></TextBox>
+                            <CheckBox Grid.Row="2" Grid.Column="1" Content="Poprawne?" Margin="0,97,0,0" IsChecked="{Binding TabEditQuizVM.CurrentAnswer.IsCorrect}"></CheckBox>
+                            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,126,0,34" Grid.RowSpan="2" Text="{Binding TabEditQuizVM.CurrentAnswer.Text}"></TextBox>
+                            <Button Content="Zaktualizuj nazwę quizu" Grid.Column="2" Grid.Row="0" Command="{Binding TabEditQuizVM.UpdateQuiz}"></Button>
+                            <Button Content="Zaktualizuj treść pytania" Grid.Column="2" Grid.Row="1" Command="{Binding TabEditQuizVM.UpdateQuestion}"></Button>
+                            <Button Content="Zaktualizuj odpowiedź" Grid.Column="2" Grid.Row="2" Command="{Binding TabEditQuizVM.UpdateAnswer}"></Button>
                         </Grid>
                     </TabItem>
                 </TabControl>

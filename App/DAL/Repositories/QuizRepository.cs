@@ -16,8 +16,10 @@ namespace App.DAL.Repositories
     {
         private const string ALL_QUIZES = "SELECT * FROM quizes";
         private const string ALL_QUIZ_NAMES = "SELECT name FROM quizes";
+        private const string ALL_QUIZ_IDS = "SELECT id FROM quizes";
         private const string QUIZID_BY_NAME = "SELECT id FROM quizes WHERE name = ";
         private const string ADD_NEW_QUIZ = "INSERT INTO quizes (name) VALUE ";
+        private const string UPDATE = "UPDATE quizes SET ";
 
         public static ObservableCollection<Quiz> GetAllQuizes()
         {
@@ -47,6 +49,19 @@ namespace App.DAL.Repositories
             }
             return quizNames;
         }
+        public static ObservableCollection<int> GetAllQuizIds()
+        {
+            ObservableCollection<int> quizIds = [];
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(ALL_QUIZ_IDS, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { quizIds.Add(reader.GetInt32(0)); }
+                connection.Close();
+            }
+            return quizIds;
+        }
         public static int GetQuizIdByName(string name)
         {
             int id = -1;
@@ -66,6 +81,20 @@ namespace App.DAL.Repositories
             using (var connection = DBConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(ADD_NEW_QUIZ + $"( '{name}' )", connection);
+                connection.Open();
+                var n = command.ExecuteNonQuery();
+                stan = true;
+                connection.Close();
+            }
+            return stan;
+        }
+
+        public static bool UpdateQuiz(Quiz quiz)
+        {
+            bool stan = false;
+            using ( var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(UPDATE + "name='" + quiz.Name + "' WHERE id=" + quiz.Id, connection);
                 connection.Open();
                 var n = command.ExecuteNonQuery();
                 stan = true;

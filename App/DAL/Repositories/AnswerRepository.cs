@@ -10,6 +10,7 @@ namespace App.DAL.Repositories
         private const string ANSWERS_BY_QUESTION_ID = "SELECT * FROM answers WHERE question = ";
         private const string ANSWERID_BY_QUESTION_ID = "SELECT id FROM answers WHERE question = ";
         private const string ADD_NEW_ANSWER = "INSERT INTO answers (text, isCorrect, question) VALUES ";
+        private const string UPDATE = "UPDATE answers SET ";
 
         public static ObservableCollection<Answer> GetAnswersByQuestionId(int questionId)
         {
@@ -47,6 +48,23 @@ namespace App.DAL.Repositories
             using (var connection = DBConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(ADD_NEW_ANSWER + $"( '{name}', {isTrue}, {id} )", connection);
+                connection.Open();
+                var n = command.ExecuteNonQuery();
+                stan = true;
+                connection.Close();
+            }
+            return stan;
+        }
+
+        public static bool UpdateAnswer(Answer answer)
+        {
+            int corr = -1;
+            bool stan = false;
+            if (answer.IsCorrect) corr = 1;
+            else corr = 0;
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(UPDATE + "text='" + answer.Text +"', isCorrect=" + corr +" WHERE id=" + answer.Id, connection);
                 connection.Open();
                 var n = command.ExecuteNonQuery();
                 stan = true;

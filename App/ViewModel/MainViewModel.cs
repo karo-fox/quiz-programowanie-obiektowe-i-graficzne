@@ -9,15 +9,16 @@ namespace App.ViewModel
     using App.Model;
     internal class MainViewModel
     {
-        private CreatorModel model = new CreatorModel();
+        private CreatorModel cmodel = new CreatorModel();
+        private EditorModel emodel = new EditorModel();
         public TabCreateQuizViewModel TabCreateQuizVM { get; set; }
-        public TabEditQuizViewModel TabEditQuizVM { get; set;}
+        public TabEditQuizViewModel TabEditQuizVM { get; set; }
         public SelectQuizViewModel SelectQuizVM { get; set; }
         public SolveQuizViewModel SolveQuizVM { get; set; }
         public MainViewModel() 
         {
-            TabCreateQuizVM = new TabCreateQuizViewModel(model);
-            TabEditQuizVM = new TabEditQuizViewModel(model);
+            TabCreateQuizVM = new TabCreateQuizViewModel(cmodel);
+            TabEditQuizVM = new TabEditQuizViewModel(emodel);
             SelectQuizVM = new SelectQuizViewModel();
             SolveQuizVM = new SolveQuizViewModel();
         }
