@@ -14,5 +14,9 @@ namespace App.DAL.Entities
             Text = reader["text"].ToString();
             QuizId = sbyte.Parse(reader["quiz"].ToString());
         }
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

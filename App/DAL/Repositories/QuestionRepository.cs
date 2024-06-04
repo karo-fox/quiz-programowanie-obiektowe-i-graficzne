@@ -8,6 +8,7 @@ namespace App.DAL.Repositories
         private const string QUESTIONS_BY_QUIZ_ID = "SELECT * FROM questions WHERE quiz = ";
         private const string QUESTIONID_BY_QUIZ_ID = "SELECT id FROM questions WHERE quiz = ";
         private const string ADD_NEW_QUESTION = "INSERT INTO questions (text, quiz) VALUES ";
+        private const string UPDATE = "UPDATE questions SET ";
 
         public static List<Question> GetQuestionsByQuizId(int? quizId)
         {
@@ -59,6 +60,20 @@ namespace App.DAL.Repositories
                 AnswerRepository.AddNewAnswer(ans2, bans2, questionId);
                 AnswerRepository.AddNewAnswer(ans3, bans3, questionId);
                 AnswerRepository.AddNewAnswer(ans4, bans4, questionId);
+            }
+            return stan;
+        }
+
+        public static bool UpdateQuestion(Question question)
+        {
+            bool stan = false;
+            using (var conn = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(UPDATE + "text='" + question.Text + "' WHERE id=" + question.Id, conn);
+                conn.Open();
+                var n = command.ExecuteNonQuery();
+                stan = true;
+                conn.Close();
             }
             return stan;
         }

@@ -12,28 +12,65 @@ namespace App.Model
 
     internal class EditorModel
     {
-        public ObservableCollection<int> QuestionIds { get; set; } = new ObservableCollection<int>();
-        public ObservableCollection<int> QuizIds { get; set; } = new ObservableCollection<int>();
-        public ObservableCollection<int> AnswerIds { get; set; } = new ObservableCollection<int>();
+        public ObservableCollection<Quiz> Quizes { get; set; } = new ObservableCollection<Quiz>();
+        public ObservableCollection<Question> Questions { get; set; } = new ObservableCollection<Question>();
+        public ObservableCollection<Answer> Answers { get; set; } = new ObservableCollection<Answer>();
         public EditorModel() 
-        { 
-            
+        {
+            var q = QuizRepository.GetAllQuizes();
+            foreach (var w in q)
+                Quizes.Add(w);
+        }
+
+        public void RefreshQuizes()
+        {
+            Quizes.Clear();
+            var q = QuizRepository.GetAllQuizes();
+            foreach (var w in q)
+                Quizes.Add(w);
         }
         
         public void RefreshQuestions(int quizID)
         {
-            QuestionIds = new ObservableCollection<int>();
-            var ids = QuestionRepository.GetQuestionIdByQuizId(quizID);
+            Questions = new ObservableCollection<Question>();
+            var ids = QuestionRepository.GetQuestionsByQuizId(quizID);
             foreach (var id in ids) 
-                QuestionIds.Add(id);
+                Questions.Add(id);
         }
 
         public void RefreshAnswers(int questionID)
         {
-            AnswerIds = new ObservableCollection<int>();
-            var ids = AnswerRepository.GetAnswersIdByQuestionId(questionID);
+            Answers = new ObservableCollection<Answer>();
+            var ids = AnswerRepository.GetAnswersByQuestionId(questionID);
             foreach (var id in ids) 
-                AnswerIds.Add(id);
+                Answers.Add(id);
+        }
+
+        public bool UpdateQuiz(Quiz quiz)
+        {
+            if(QuizRepository.UpdateQuiz(quiz))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateQuestion(Question question)
+        {
+            if (QuestionRepository.UpdateQuestion(question))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateAnswer(Answer answer)
+        {
+            if (AnswerRepository.UpdateAnswer(answer))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
