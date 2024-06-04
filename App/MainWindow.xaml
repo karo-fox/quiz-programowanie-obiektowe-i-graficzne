@@ -87,7 +87,7 @@
             </TabItem>
             <TabItem x:Name="solver" Header="Rozwiązywacz" Height="20" VerticalAlignment="Top">
                 <TabControl SelectedIndex="{Binding SolveQuizVM.TabIndex}">
-                    <TabItem x:Name="selector" Header="Wybór quizu">
+                    <TabItem x:Name="selector" Header="Wybór quizu" IsEnabled="{Binding SolveQuizVM.SelectQuizTabEnabled}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -103,7 +103,7 @@
                             <Button x:Name="selectQuizBtn" Grid.Row="1" Content="Rozpocznij Quiz" Command="{Binding SolveQuizVM.ReloadQuizSolver}" />
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="quiz" Header="Rozwiązywanie Quizu">
+                    <TabItem x:Name="quiz" Header="Rozwiązywanie Quizu" IsEnabled="{Binding SolveQuizVM.SolveQuizTabEnabled}" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -162,7 +162,7 @@
 
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="results" Header="Wyniki">
+                    <TabItem x:Name="results" Header="Wyniki" IsEnabled="{Binding SolveQuizVM.QuizResultsTabEnabled}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />

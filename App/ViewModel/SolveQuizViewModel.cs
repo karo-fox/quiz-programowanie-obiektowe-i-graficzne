@@ -167,6 +167,39 @@ namespace App.ViewModel
             }
         }
 
+        private bool selectQuizTabEnabled = true;
+        public bool SelectQuizTabEnabled
+        {
+            get { return selectQuizTabEnabled; }
+            set
+            {
+                selectQuizTabEnabled = value;
+                onPropertyChanged(nameof(SelectQuizTabEnabled));
+            }
+        }
+
+        private bool solveQuizTabEnabled = false;
+        public bool SolveQuizTabEnabled
+        {
+            get { return solveQuizTabEnabled; }
+            set
+            {
+                solveQuizTabEnabled = value;
+                onPropertyChanged(nameof(SolveQuizTabEnabled));
+            }
+        }
+
+        private bool quizResultsTabEnabled = false;
+        public bool QuizResultsTabEnabled
+        {
+            get { return quizResultsTabEnabled; }
+            set
+            {
+                quizResultsTabEnabled = value;
+                onPropertyChanged(nameof(QuizResultsTabEnabled));
+            }
+        }
+
         public string CurrentTime
         {
             get
@@ -223,6 +256,9 @@ namespace App.ViewModel
                         timer.Start();
 
                         TabIndex = 1;
+
+                        SelectQuizTabEnabled = false;
+                        SolveQuizTabEnabled = true;
                     },
                     _ => true);
                 }
@@ -279,8 +315,22 @@ namespace App.ViewModel
                     endQuiz = new RelayCommand(
                     _ =>
                     {
+                        bool[] checkList = [Checked1, Checked2, Checked3, Checked4];
+                        foreach (Answer answer in Answers.Where(answer => checkList[Answers.IndexOf(answer)]))
+                        {
+                            questionSolver.SelectAnswer(answer.Id);
+                        }
+                        if (questionSolver.IsCorrect())
+                        {
+                            Points++;
+                        }
+
                         timer.Stop();
                         TabIndex = 2;
+
+                        SelectQuizTabEnabled = true;
+                        SolveQuizTabEnabled = false;
+                        QuizResultsTabEnabled = true;
                     },
                     _ => true
                         );
