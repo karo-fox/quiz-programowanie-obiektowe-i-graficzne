@@ -71,9 +71,9 @@
                             <TextBlock Text="Wybierz quiz" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,262,87"></TextBlock>
                             <TextBlock Text="Wybierz pytanie" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,80" Grid.RowSpan="2"/>
                             <TextBlock Text="Wybierz odpowiedź" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,126,262,85" Grid.RowSpan="2"></TextBlock>
-                            <ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0" ItemsSource="{Binding TabEditQuizVM.Quizes, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentQuiz, Mode=TwoWay}"></ComboBox>
-                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0" ItemsSource="{Binding TabEditQuizVM.Questions, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentQuestion, Mode=TwoWay}"></ComboBox>
-                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0" ItemsSource="{Binding TabEditQuizVM.Answers, Mode=TwoWay}" SelectedValue="{Binding TabEditQuizVM.CurrentAnswer, Mode=TwoWay}"></ComboBox>
+                            <ComboBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,44,262,0" ItemsSource="{Binding TabEditQuizVM.Quizes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" SelectedItem="{Binding TabEditQuizVM.CurrentQuiz, Mode=TwoWay}"></ComboBox>
+                            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,51,262,0" ItemsSource="{Binding TabEditQuizVM.Questions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding TabEditQuizVM.CurrentQuestion, Mode=TwoWay}"></ComboBox>
+                            <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,46,262,0" ItemsSource="{Binding TabEditQuizVM.Answers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding TabEditQuizVM.CurrentAnswer, Mode=TwoWay}"></ComboBox>
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TabEditQuizVM.CurrentQuiz.Name}"></TextBox>
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TabEditQuizVM.CurrentQuestion.Text}"></TextBox>
                             <CheckBox Grid.Row="2" Grid.Column="1" Content="Poprawne?" Margin="0,97,0,0" IsChecked="{Binding TabEditQuizVM.CurrentAnswer.IsCorrect}"></CheckBox>
