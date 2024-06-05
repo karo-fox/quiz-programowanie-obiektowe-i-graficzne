@@ -20,6 +20,12 @@ namespace App.Model
             var q = QuizRepository.GetAllQuizes();
             foreach (var w in q)
                 Quizes.Add(w);
+            var e = QuestionRepository.GetAllQuestions();
+            foreach (var r in e)
+                Questions.Add(r);
+            var t = AnswerRepository.GetAllAnswers();
+            foreach (var y in t)
+                Answers.Add(y);
         }
 
         public void RefreshQuizes()

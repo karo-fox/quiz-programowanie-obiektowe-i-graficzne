@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace App.ViewModel
 {
     using App.DAL.Entities;
+    using App.DAL.Repositories;
     using App.Model;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
@@ -25,15 +26,47 @@ namespace App.ViewModel
         {
             this.model = model;
             quizes = model.Quizes;
-            currentQuiz = quizes.First();
-            model.RefreshQuestions((int)currentQuiz.Id);
             questions = model.Questions;
-            currentQuestion = questions.First();
-            Questions = questions;
-            model.RefreshAnswers((int)currentQuestion.Id);
             answers = model.Answers;
-            currentAnswer = answers.First();
-            Answers = answers;
+        }
+
+        private void refreshAnswers()
+        {
+            currentAnswer = null;
+            answers.Clear();
+            if (currentQuestion != null)
+            {
+                foreach (var answer in AnswerRepository.GetAnswersByQuestionId(currentQuestion.Id))
+                    answers.Add(answer);
+            }
+            else
+            {
+                foreach (var answer in AnswerRepository.GetAllAnswers())
+                    answers.Add(answer);
+            }
+        }
+        private void refreshQuestions()
+        {
+            currentQuestion = null;
+            questions.Clear();
+            if (currentQuiz != null)
+            {
+                foreach (var question in QuestionRepository.GetQuestionsByQuizId(currentQuiz.Id))
+                    questions.Add(question);
+            }
+            else
+            {
+                foreach (var question in QuestionRepository.GetAllQuestions())
+                    questions.Add(question);
+            }
+        }
+
+        private void refreshQuizes()
+        {
+            currentQuiz = null;
+            quizes.Clear();
+            foreach (var quiz in QuizRepository.GetAllQuizes())
+                quizes.Add(quiz);
         }
 
         #region Właściwości
@@ -45,10 +78,7 @@ namespace App.ViewModel
             {
                 currentQuiz = value;
                 onPropertyChanged(nameof(CurrentQuiz));
-                model.RefreshQuestions((int)currentQuiz.Id);
-                questions = model.Questions;
-                currentQuestion = questions.First();
-                //Questions = questions;
+                refreshQuestions();
             }
         }
         
@@ -68,10 +98,8 @@ namespace App.ViewModel
             { 
                 currentQuestion = value;
                 onPropertyChanged(nameof(CurrentQuestion));
-                model.RefreshAnswers((int)currentQuestion.Id);
-                answers = model.Answers;
-                currentAnswer = answers.First();
-                Answers = answers;
+                refreshAnswers();
+                
             }
         }
         public ObservableCollection<Quiz> Quizes
@@ -84,7 +112,7 @@ namespace App.ViewModel
             }
         }
         public ObservableCollection<Question> Questions
-        { 
+        {
             get { return questions; }
             set 
             { 
@@ -117,6 +145,7 @@ namespace App.ViewModel
                         {
                             model.UpdateQuiz(currentQuiz);
                             //ClearNewQuiz();
+                            refreshQuizes();
                         }
                         ,
                         arg => (currentQuiz != null)
@@ -136,6 +165,7 @@ namespace App.ViewModel
                         {
                             model.UpdateQuestion(currentQuestion);
                             //ClearNewQuiz();
+                            refreshQuestions();
                         }
                         ,
                         arg => (currentQuestion != null)
@@ -155,6 +185,7 @@ namespace App.ViewModel
                         {
                             model.UpdateAnswer(currentAnswer);
                             //currentAnswer = null;
+                            refreshAnswers();
                         }
                         ,
                         arg => (currentAnswer != null)

@@ -1,5 +1,6 @@
 ﻿using App.DAL.Entities;
 using MySql.Data.MySqlClient;
+using System.Collections.ObjectModel;
 
 namespace App.DAL.Repositories
 {
@@ -9,6 +10,23 @@ namespace App.DAL.Repositories
         private const string QUESTIONID_BY_QUIZ_ID = "SELECT id FROM questions WHERE quiz = ";
         private const string ADD_NEW_QUESTION = "INSERT INTO questions (text, quiz) VALUES ";
         private const string UPDATE = "UPDATE questions SET ";
+        private const string GET_ALL_QUESTIONS = "SELECT * FROM questions";
+
+        public static ObservableCollection<Question> GetAllQuestions()
+        {
+            ObservableCollection<Question> questions = [];
+
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(GET_ALL_QUESTIONS, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { questions.Add(new Question(reader)); }
+                connection.Close();
+            }
+
+            return questions;
+        }
 
         public static List<Question> GetQuestionsByQuizId(int? quizId)
         {

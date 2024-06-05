@@ -11,6 +11,23 @@ namespace App.DAL.Repositories
         private const string ANSWERID_BY_QUESTION_ID = "SELECT id FROM answers WHERE question = ";
         private const string ADD_NEW_ANSWER = "INSERT INTO answers (text, isCorrect, question) VALUES ";
         private const string UPDATE = "UPDATE answers SET ";
+        private const string GET_ALL_ANSWERS = "SELECT * FROM answers";
+
+        public static ObservableCollection<Answer> GetAllAnswers()
+        {
+            ObservableCollection<Answer> answers = [];
+
+            using (var connection = DBConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(GET_ALL_ANSWERS, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read()) { answers.Add(new Answer(reader)); }
+                connection.Close();
+            }
+
+            return answers;
+        }
 
         public static ObservableCollection<Answer> GetAnswersByQuestionId(int questionId)
         {
