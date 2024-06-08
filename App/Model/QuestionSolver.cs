@@ -33,7 +33,7 @@ namespace App.Model
 
         public bool IsCorrect()
         {
-            return currentAnswers.All(answer => answer.IsCorrect);
+            return currentAnswers.All(answer => answer.IsCorrect) && correctAnswers.All(answer => currentAnswers.Contains(answer));
         }
     }
 }

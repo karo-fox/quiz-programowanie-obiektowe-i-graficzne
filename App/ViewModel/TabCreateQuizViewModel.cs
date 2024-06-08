@@ -10,6 +10,7 @@ namespace App.ViewModel
     using App.DAL.Repositories;
     using App.Model;
     using System.Collections.ObjectModel;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     internal class TabCreateQuizViewModel:ViewModelBase
@@ -180,8 +181,8 @@ namespace App.ViewModel
                             ClearNewQuiz();
                         }
                         ,
-                        arg => (newQuizName != "")
-                        );
+                        arg => (newQuizName != "") && newQuizName != null
+                        ); ;
                 return dodajQuiz;
             }
         }
@@ -199,11 +200,12 @@ namespace App.ViewModel
                             ClearNewQuestion();
                         }
                         ,
-                        arg => (question != "") && (ans1 != "") && (ans2 != "") && (ans3 != "") && (ans4 != "")
+                        arg => (question != "") && (ans1 != "") && (ans2 != "") && (ans3 != "") && (ans4 != "") && (question != null) && (ans1 != null) && (ans2 != null) && (ans3 != null) && (ans4 != null)
                         );
                 return dodajPytanie;
             }
         }
+
 
         #endregion
     }
